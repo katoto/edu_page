@@ -31,10 +31,10 @@ let getList = async() => {
         // await page.goto('http://www.dlrzy.com/a/xiaoxuewunian/shuxue_yuwen_yingyu/list_11_' + (i + 1) + '.html')
         // await page.goto('http://www.dlrzy.com/a/xiaoxuewunian/yingyu/list_25_' + (i + 1) + '.html')
         // await page.goto('http://www.dlrzy.com/a/xiaoxuewunian/yuwen/list_24_' + (i + 1) + '.html')
-
+        // 6
         // await page.goto('http://www.dlrzy.com/a/xiaoxueliunian/shuxue_yuwen_yingyu/list_13_' + (i + 1) + '.html')
-        await page.goto('http://www.dlrzy.com/a/xiaoxueliunian/yingyu/list_27_' + (i + 1) + '.html')
-            // await page.goto('http://www.dlrzy.com/a/xiaoxueliunian/yuwen/list_26_' + (i + 1) + '.html')
+        // await page.goto('http://www.dlrzy.com/a/xiaoxueliunian/yingyu/list_27_' + (i + 1) + '.html')
+        // await page.goto('http://www.dlrzy.com/a/xiaoxueliunian/yuwen/list_26_' + (i + 1) + '.html')
 
         const basekutuImg = await page.evaluate(() => {
             let kutu = []
@@ -64,7 +64,7 @@ let getList = async() => {
 
                 // baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueliunian/shuxue_yuwen_yingyu/', '')
                 // baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueliunian/yuwen/', '')
-                baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueliunian/yingyu/', '')
+                // baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueliunian/yingyu/', '')
 
                 currObj._id = baseid.replace('.html', '')
                 currObj.titleLink = item.querySelector('.title').getAttribute('href')
@@ -111,7 +111,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
             // dbo.collection('edu_class5_yingyu').save(item)
             // dbo.collection('edu_class6_shuxue').save(item)
             // dbo.collection('edu_class6_yuwen').save(item)
-            dbo.collection('edu_class6_yingyu').save(item)
+            // dbo.collection('edu_class6_yingyu').save(item)
         })
     }, 1000)
 })
