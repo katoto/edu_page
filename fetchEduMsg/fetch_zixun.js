@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer')
-let getList = async() => {
+let getList = async () => {
     const browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
@@ -9,7 +9,7 @@ let getList = async() => {
     let kutuImg = []
     for (let i = 0; i < 1; i++) {
         const page = await browser.newPage()
-            // 一年级数学
+        // 一年级数学
         await page.goto('http://xiaoxue.xdf.cn/list_1266_1.html')
         const basekutuImg = await page.evaluate(() => {
             let kutu = []
@@ -39,15 +39,14 @@ let getList = async() => {
 
 var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://47.96.234.59:27017/'
-MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setTimeout(async() => {
+    setTimeout(async () => {
         let backData = null
         backData = await getList()
         backData.kutuImg.forEach((item, index) => {
             dbo.collection('edu_zixun').save(item)
-
         })
     }, 1000)
 })
