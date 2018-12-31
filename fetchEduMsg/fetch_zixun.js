@@ -10,7 +10,8 @@ let getList = async () => {
     for (let i = 0; i < 1; i++) {
         const page = await browser.newPage()
         // 一年级数学
-        await page.goto('http://xiaoxue.xdf.cn/list_1266_1.html')
+        // await page.goto('http://xiaoxue.xdf.cn/list_1266_1.html')
+        await page.goto('http://xiaoxue.xdf.cn/list_1266_2.html')
         const basekutuImg = await page.evaluate(() => {
             let kutu = []
             document.querySelectorAll('#li_list li').forEach((item, index) => {
