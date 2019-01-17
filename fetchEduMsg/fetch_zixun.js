@@ -9,7 +9,7 @@ let getList = async() => {
     let kutuImg = []
     for (let i = 0; i < 1; i++) {
         const page = await browser.newPage()
-            // 一年级数学
+            // 新东方咨询
         await page.goto('http://xiaoxue.xdf.cn/list_1266_1.html')
         const basekutuImg = await page.evaluate(() => {
             let kutu = []
