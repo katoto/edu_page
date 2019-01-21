@@ -1,7 +1,7 @@
 {
     "name": "edu_page",
     "version": "1.0.0",
-    "description": "弄一个教育资源站点",
+    "description": "教育资源站点爬虫数据",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
