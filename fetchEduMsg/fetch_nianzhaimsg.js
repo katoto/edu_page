@@ -30,7 +30,9 @@ let getList = async(result, dbo) => {
         headless: false,
         args: ['--no-sandbox']
     }))
-    for (let i = 0, len = result.length; i < len; i++) {
+    console.log(result.length)
+        // for (let i = 0, len = result.length; i < len; i++) {
+    for (let i = 49, len = result.length; i < len; i++) {
         const page = await browser.newPage()
             // await page.goto('https://qingniantuzhai.com/qing-nian-tu-zhai-0121/', {
             //     timeout: 120000
@@ -43,8 +45,12 @@ let getList = async(result, dbo) => {
                 arteye: null,
                 artmsg: null
             }
-            kutu['arteye'] = document.querySelector('.post .post_icon .posteye').innerHTML
-            kutu['artmsg'] = document.querySelector('.post .post-content').innerHTML
+            if (document.querySelector('.post .post_icon .posteye')) {
+                kutu['arteye'] = document.querySelector('.post .post_icon .posteye').innerHTML
+            }
+            if (document.querySelector('.post .post-content')) {
+                kutu['artmsg'] = document.querySelector('.post .post-content').innerHTML
+            }
             return kutu
         })
         basekutu._id = result[i]._id
