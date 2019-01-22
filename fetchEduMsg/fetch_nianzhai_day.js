@@ -41,7 +41,7 @@ var url = 'mongodb://47.96.234.59:27017/'
 MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setTimeout(async() => {
+    setInterval(async() => {
         let backData = null;
         let currMsg = null;
         backData = await getList()
@@ -52,7 +52,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
             if (currMsg && currMsg.titleLink && i < 3) {
                 const page = await browser.newPage()
                 await page.goto('https://qingniantuzhai.com' + currMsg.titleLink, {
-                    timeout: 120000
+                    timeout: 0
                 })
                 const nianmsg = await page.evaluate(() => {
                     let kutu = {
@@ -72,5 +72,5 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
             }
         }
         browser.close()
-    }, 1000)
+    }, 3600000)
 })
