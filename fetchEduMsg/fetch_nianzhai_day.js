@@ -3,13 +3,13 @@ const puppeteer = require('puppeteer')
 let browser = null
 let page = null
 
-let getList = async() => {
+let getList = async () => {
     let kutuImg = []
-        // 一年级数学
+    // 一年级数学
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
-        headless: false,
+        headless: true,
         args: ['--no-sandbox']
     }))
     page = await browser.newPage()
@@ -38,39 +38,44 @@ let getList = async() => {
 
 var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://47.96.234.59:27017/'
-MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setTimeout(async() => {
+    setInterval(async () => {
         let backData = null;
         let currMsg = null;
         backData = await getList()
         for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
             currMsg = backData.kutuImg[i]
             dbo.collection('nianzhai_list').save(currMsg)
-                // 取详情数据
-            if (currMsg && currMsg.titleLink && i < 3) {
-                const page = await browser.newPage()
-                await page.goto('https://qingniantuzhai.com' + currMsg.titleLink, {
-                    timeout: 120000
-                })
-                const nianmsg = await page.evaluate(() => {
-                    let kutu = {
-                        arteye: null,
-                        artmsg: null
-                    }
-                    if (document.querySelector('.post .post_icon .posteye')) {
-                        kutu['arteye'] = document.querySelector('.post .post_icon .posteye').innerHTML
-                    }
-                    if (document.querySelector('.post .post-content')) {
-                        kutu['artmsg'] = document.querySelector('.post .post-content').innerHTML
-                    }
-                    return kutu
-                })
-                nianmsg._id = currMsg._id
-                dbo.collection('nianzhai_listmsg').save(nianmsg)
+            // 取详情数据
+            if (currMsg && currMsg.titleLink && i < 2) {
+                if (browser) {
+                    const page = await browser.newPage()
+                    await page.goto('https://qingniantuzhai.com' + currMsg.titleLink, {
+                        timeout: 0
+                    })
+                    console.log(i)
+                    const nianmsg = await page.evaluate(() => {
+                        let kutu = {
+                            arteye: null,
+                            artmsg: null
+                        }
+                        if (document.querySelector('.post .post_icon .posteye')) {
+                            kutu['arteye'] = document.querySelector('.post .post_icon .posteye').innerHTML
+                        }
+                        if (document.querySelector('.post .post-content')) {
+                            kutu['artmsg'] = document.querySelector('.post .post-content').innerHTML
+                        }
+                        return kutu
+                    })
+                    nianmsg._id = currMsg._id
+                    dbo.collection('nianzhai_listmsg').save(nianmsg)
+                }
             }
         }
         browser.close()
-    }, 1000)
+        console.log('ending')
+        console.log(new Date().getDate())
+    }, 3600000)
 })
