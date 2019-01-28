@@ -1,3 +1,4 @@
+// 所有年级列表获取
 const puppeteer = require('puppeteer')
 let getList = async() => {
     const browser = await (puppeteer.launch({
@@ -12,7 +13,7 @@ let getList = async() => {
             // 一年级数学
             // await page.goto('http://www.dlrzy.com/a/xiaoxueyinian/shuxue_yuwen_yingyu/list_3_' + (i + 1) + '.html')
             // 一年级语文
-            // await page.goto('http://www.dlrzy.com/a/xiaoxueyinian/yuwen/list_28_' + (i + 1) + '.html')
+        await page.goto('http://www.dlrzy.com/a/xiaoxueyinian/yuwen/list_28_' + (i + 1) + '.html')
             // 一年级英语
             // await page.goto('http://www.dlrzy.com/a/xiaoxueyinian/yingyu/list_17_' + (i + 1) + '.html')
             // 二年级数学
@@ -46,7 +47,7 @@ let getList = async() => {
                     // 英语1
                     // baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueyinian/yingyu/', '')
                     // 语文1
-                    // baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueyinian/yuwen/', '')
+                baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueyinian/yuwen/', '')
                     // 数学2
                     // baseid = item.querySelector('.title').getAttribute('href').replace('http://www.dlrzy.com/a/xiaoxueernian/shuxue_yuwen_yingyu/', '')
                     // 英语2
@@ -95,23 +96,23 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
         backData = await getList()
         backData.kutuImg.forEach((item, index) => {
             // dbo.collection('edu_class1_shuxue').save(item)
-            // dbo.collection('edu_class1_yuwen').save(item)
-            // dbo.collection('edu_class1_yingyu').save(item)
-            // dbo.collection('edu_class2_shuxue').save(item)
-            // dbo.collection('edu_class2_yuwen').save(item)
-            // dbo.collection('edu_class2_yingyu').save(item)
-            // dbo.collection('edu_class3_shuxue').save(item)
-            // dbo.collection('edu_class3_yuwen').save(item)
-            // dbo.collection('edu_class3_yingyu').save(item)
-            // dbo.collection('edu_class4_shuxue').save(item)
-            // dbo.collection('edu_class4_yuwen').save(item)
-            // dbo.collection('edu_class4_yingyu').save(item)
-            // dbo.collection('edu_class5_shuxue').save(item)
-            // dbo.collection('edu_class5_yuwen').save(item)
-            // dbo.collection('edu_class5_yingyu').save(item)
-            // dbo.collection('edu_class6_shuxue').save(item)
-            // dbo.collection('edu_class6_yuwen').save(item)
-            // dbo.collection('edu_class6_yingyu').save(item)
+            dbo.collection('edu_class1_yuwen').save(item)
+                // dbo.collection('edu_class1_yingyu').save(item)
+                // dbo.collection('edu_class2_shuxue').save(item)
+                // dbo.collection('edu_class2_yuwen').save(item)
+                // dbo.collection('edu_class2_yingyu').save(item)
+                // dbo.collection('edu_class3_shuxue').save(item)
+                // dbo.collection('edu_class3_yuwen').save(item)
+                // dbo.collection('edu_class3_yingyu').save(item)
+                // dbo.collection('edu_class4_shuxue').save(item)
+                // dbo.collection('edu_class4_yuwen').save(item)
+                // dbo.collection('edu_class4_yingyu').save(item)
+                // dbo.collection('edu_class5_shuxue').save(item)
+                // dbo.collection('edu_class5_yuwen').save(item)
+                // dbo.collection('edu_class5_yingyu').save(item)
+                // dbo.collection('edu_class6_shuxue').save(item)
+                // dbo.collection('edu_class6_yuwen').save(item)
+                // dbo.collection('edu_class6_yingyu').save(item)
         })
     }, 1000)
 })
