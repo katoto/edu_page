@@ -25,6 +25,7 @@ let getList = async() => {
             currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
             currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
             currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
+            currObj.sortTime = parseFloat(item.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
             currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
             kutu.push(currObj)
         })
@@ -77,5 +78,5 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
         browser.close()
         console.log('ending')
         console.log(new Date().getDate())
-    }, 3600000)
+    }, 18000000)
 })
