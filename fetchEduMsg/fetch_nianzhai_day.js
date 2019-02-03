@@ -3,9 +3,9 @@ const puppeteer = require('puppeteer')
 let browser = null
 let page = null
 
-let getList = async() => {
+let getList = async () => {
     let kutuImg = []
-        // 一年级数学
+    // 一年级数学
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
@@ -25,7 +25,7 @@ let getList = async() => {
             currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
             currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
             currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
-            currObj.sortTime = parseFloat(item.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
+            currObj.sortTime = parseFloat(currObj.titletime.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
             currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
             kutu.push(currObj)
         })
@@ -39,17 +39,17 @@ let getList = async() => {
 
 var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://47.96.234.59:27017/'
-MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setInterval(async() => {
+    setInterval(async () => {
         let backData = null;
         let currMsg = null;
         backData = await getList()
         for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
             currMsg = backData.kutuImg[i]
             dbo.collection('nianzhai_list').save(currMsg)
-                // 取详情数据
+            // 取详情数据
             if (currMsg && currMsg.titleLink && i < 2) {
                 if (browser) {
                     const page = await browser.newPage()
