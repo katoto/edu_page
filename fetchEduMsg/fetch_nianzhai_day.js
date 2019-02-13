@@ -5,11 +5,11 @@ let page = null
 
 let getList = async() => {
     let kutuImg = []
-        // 一年级数学
+        // 年摘
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
-        headless: false,
+        headless: true,
         args: ['--no-sandbox']
     }))
     page = await browser.newPage()
@@ -21,13 +21,15 @@ let getList = async() => {
             let baseid = null
             currObj._id = item.querySelector('.posts-gallery-img a').getAttribute('href')
             currObj.titleLink = currObj._id
-            currObj.img = item.querySelector('.posts-gallery-img a img').getAttribute('data-original')
-            currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
-            currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
-            currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
-            currObj.sortTime = parseFloat(item.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
-            currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
-            kutu.push(currObj)
+            if (item.querySelector('.posts-gallery-img a img')) {
+                currObj.img = item.querySelector('.posts-gallery-img a img').getAttribute('data-original')
+                currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
+                currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
+                currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
+                currObj.sortTime = parseFloat(currObj.titletime.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
+                currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
+                kutu.push(currObj)
+            }
         })
         return kutu
     })
@@ -42,7 +44,7 @@ var url = 'mongodb://47.96.234.59:27017/'
 MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setTimeout(async() => {
+    setInterval(async() => {
         try {
             let backData = null;
             let currMsg = null;
@@ -77,11 +79,11 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
                 }
             }
         } catch (e) {
-            console.log('33')
+            console.log('error at catch')
             console.log(e)
         }
         browser.close()
         console.log('ending')
         console.log(new Date().getDate())
-    }, 100)
+    }, 9200000)
 })
