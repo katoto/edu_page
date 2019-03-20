@@ -8,7 +8,7 @@ let getList = async() => {
         args: ['--no-sandbox']
     }))
     let kutuImg = []
-    for (let i = 1; i < 6; i++) {
+    for (let i = 1; i < 3; i++) {
         const page = await browser.newPage()
             // 一年级数学
         await page.goto('http://qingniantuzhai.com/page/' + i + '/')
@@ -19,12 +19,15 @@ let getList = async() => {
                 let baseid = null
                 currObj._id = item.querySelector('.posts-gallery-img a').getAttribute('href')
                 currObj.titleLink = currObj._id
-                currObj.img = item.querySelector('.posts-gallery-img a img').getAttribute('data-original')
-                currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
-                currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
-                currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
-                currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
-                kutu.push(currObj)
+                if (item.querySelector('.posts-gallery-img a img')) {
+                    currObj.img = item.querySelector('.posts-gallery-img a img').getAttribute('data-original')
+                    currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
+                    currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
+                    currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
+                    currObj.sortTime = parseFloat(currObj.titletime.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
+                    currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
+                    kutu.push(currObj)
+                }
             })
             return kutu
         })
