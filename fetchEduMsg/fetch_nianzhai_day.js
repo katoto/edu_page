@@ -5,7 +5,7 @@ let page = null
 
 let getList = async () => {
     let kutuImg = []
-    // 一年级数学
+        // 年摘
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
@@ -21,13 +21,15 @@ let getList = async () => {
             let baseid = null
             currObj._id = item.querySelector('.posts-gallery-img a').getAttribute('href')
             currObj.titleLink = currObj._id
-            currObj.img = item.querySelector('.posts-gallery-img a img').getAttribute('data-original')
-            currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
-            currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
-            currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
-            currObj.sortTime = parseFloat(currObj.titletime.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
-            currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
-            kutu.push(currObj)
+            if (item.querySelector('.posts-gallery-img a img')) {
+                currObj.img = item.querySelector('.posts-gallery-img a img').getAttribute('data-original')
+                currObj.titleName = item.querySelector('.posts-gallery-content h2 a').innerHTML
+                currObj.baseDesc = item.querySelector('.posts-gallery-content .posts-gallery-text').innerHTML
+                currObj.titletime = item.querySelector('.posts-gallery-content .posts-gallery-info .ico-time').innerHTML
+                currObj.sortTime = parseFloat(currObj.titletime.replace(/<i class=\"icon-clock-1\"><\/i> /g, '').replace(/-/g, ''))
+                currObj.author = item.querySelector('.posts-gallery-content .posts-gallery-info .post-author a').innerHTML
+                kutu.push(currObj)
+            }
         })
         return kutu
     })
@@ -42,41 +44,46 @@ var url = 'mongodb://47.96.234.59:27017/'
 MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setInterval(async () => {
-        let backData = null;
-        let currMsg = null;
-        backData = await getList()
-        for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
-            currMsg = backData.kutuImg[i]
-            dbo.collection('nianzhai_list').save(currMsg)
-            // 取详情数据
-            if (currMsg && currMsg.titleLink && i < 2) {
-                if (browser) {
-                    const page = await browser.newPage()
-                    await page.goto('https://qingniantuzhai.com' + currMsg.titleLink, {
-                        timeout: 0
-                    })
-                    console.log(i)
-                    const nianmsg = await page.evaluate(() => {
-                        let kutu = {
-                            arteye: null,
-                            artmsg: null
-                        }
-                        if (document.querySelector('.post .post_icon .posteye')) {
-                            kutu['arteye'] = document.querySelector('.post .post_icon .posteye').innerHTML
-                        }
-                        if (document.querySelector('.post .post-content')) {
-                            kutu['artmsg'] = document.querySelector('.post .post-content').innerHTML
-                        }
-                        return kutu
-                    })
-                    nianmsg._id = currMsg._id
-                    dbo.collection('nianzhai_listmsg').save(nianmsg)
+    setInterval(async() => {
+        try {
+            let backData = null;
+            let currMsg = null;
+            backData = await getList()
+            for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
+                currMsg = backData.kutuImg[i]
+                dbo.collection('nianzhai_list').save(currMsg)
+                    // 取详情数据
+                if (currMsg && currMsg.titleLink && i < 2) {
+                    if (browser) {
+                        const page = await browser.newPage()
+                        await page.goto('https://qingniantuzhai.com' + currMsg.titleLink, {
+                            timeout: 0
+                        })
+                        console.log(i)
+                        const nianmsg = await page.evaluate(() => {
+                            let kutu = {
+                                arteye: null,
+                                artmsg: null
+                            }
+                            if (document.querySelector('.post .post_icon .posteye')) {
+                                kutu['arteye'] = document.querySelector('.post .post_icon .posteye').innerHTML
+                            }
+                            if (document.querySelector('.post .post-content')) {
+                                kutu['artmsg'] = document.querySelector('.post .post-content').innerHTML
+                            }
+                            return kutu
+                        })
+                        nianmsg._id = currMsg._id
+                        dbo.collection('nianzhai_listmsg').save(nianmsg)
+                    }
                 }
             }
+        } catch (e) {
+            console.log('error at catch')
+            console.log(e)
         }
         browser.close()
         console.log('ending')
         console.log(new Date().getDate())
-    }, 18000000)
+    }, 9200000)
 })
