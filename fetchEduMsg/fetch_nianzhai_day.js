@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer')
 let browser = null
 let page = null
 
-let getList = async() => {
+let getList = async () => {
     let kutuImg = []
         // 年摘
     browser = await (puppeteer.launch({
@@ -41,7 +41,7 @@ let getList = async() => {
 
 var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://47.96.234.59:27017/'
-MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
     setInterval(async() => {
