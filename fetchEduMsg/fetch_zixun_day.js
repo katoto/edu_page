@@ -47,7 +47,6 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
             backData = await getList()
             for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
                 currMsg = backData.kutuImg[i]
-                dbo.collection('edu_zixun').save(currMsg)
                     // 取详情数据
                 if (currMsg && currMsg.titleLink && i < 12) {
                     if (browser) {
@@ -66,7 +65,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
                         })
                         currMsg.artLy = nianmsg.artLy
                         currMsg.artmsg = nianmsg.artmsg
-                        await updatemsg(currMsg, dbo)
+                        dbo.collection('edu_zixun').save(currMsg)
                     }
                 }
             }
@@ -80,12 +79,3 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     }, 9900000)
     // }, 0)
 })
-
-let updatemsg = function (res, dbo) {
-    return new Promise((resolve, reject) => {
-        console.log(res)
-        dbo.collection('edu_zixun').update({ "_id": res._id }, { $set: { artmsg: res.artmsg, artLy: res.artLy } }, function () {
-            resolve(1)
-        })
-    })
-}
