@@ -40,11 +40,11 @@ let getList = async () => {
 }
 
 var MongoClient = require('mongodb').MongoClient
-var url = 'mongodb://47.96.234.59:27017/'
+var url = 'mongodb://47.96.234.59:2710/'
 MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setInterval(async() => {
+    setTimeout(async() => {
         try {
             let backData = null;
             let currMsg = null;
@@ -69,7 +69,8 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
                                 kutu['arteye'] = document.querySelector('.post .post_icon .posteye').innerHTML
                             }
                             if (document.querySelector('.post .post-content')) {
-                                kutu['artmsg'] = document.querySelector('.post .post-content').innerHTML
+                                let currpost = document.querySelector('.post .post-content').innerHTML
+                                kutu['artmsg'] = currpost.replace('【10086】信用卡在线申请，额度可达50,000', '').replace('http://jiyongcard.com/apply', 'javascript:;').replace('http://jiyongcard.com/banner/image', '')
                             }
                             return kutu
                         })
@@ -85,5 +86,6 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
         browser.close()
         console.log('ending')
         console.log(new Date().getDate())
-    }, 9200000)
+    // }, 9200000)
+    }, 0)
 })
