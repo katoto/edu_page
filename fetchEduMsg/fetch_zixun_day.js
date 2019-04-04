@@ -7,7 +7,7 @@ let getList = async() => {
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
-        headless: true,
+        headless: false,
         args: ['--no-sandbox']
     }))
     let kutuImg = []
@@ -40,7 +40,7 @@ var url = 'mongodb://47.96.234.59:2710/'
 MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setInterval(async() => {
+    setTimeout(async() => {
         try {
             let backData = null;
             let currMsg = null;
@@ -76,6 +76,6 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
         browser.close()
         console.log('ending')
         console.log(new Date().getDate())
-    }, 9900000)
-    // }, 0)
+    // }, 9900000)
+    }, 0)
 })
