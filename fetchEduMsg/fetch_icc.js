@@ -31,7 +31,7 @@ let getList = async() => {
     let kutuImg = []
     page = await browser.newPage()
     // 小学资讯
-    await page.goto('file:///C:/Users/Administrator/Desktop/Google%20Search.mhtml')
+    await page.goto('file:///C:/Users/Administrator/Desktop/ICC%20-%20Google%20Search(1).mhtml')
     const basekutuImg = await page.evaluate(() => {
         let kutu = []
         document.querySelectorAll('.OcbAbf').forEach((item, index) => {
