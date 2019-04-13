@@ -5,11 +5,11 @@ let page = null
 
 let getList = async () => {
     let kutuImg = []
-        // 年摘
+    // 年摘
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
-        headless: true,
+        headless: false,
         args: ['--no-sandbox']
     }))
     page = await browser.newPage()
@@ -44,7 +44,7 @@ var url = 'mongodb://47.96.234.59:2710/'
 MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setInterval(async() => {
+    setTimeout(async () => {
         try {
             let backData = null;
             let currMsg = null;
@@ -52,8 +52,8 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
             for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
                 currMsg = backData.kutuImg[i]
                 dbo.collection('nianzhai_list').save(currMsg)
-                    // 取详情数据
-                if (currMsg && currMsg.titleLink && i < 2) {
+                // 取详情数据
+                if (currMsg && currMsg.titleLink && i < 5) {
                     if (browser) {
                         const page = await browser.newPage()
                         await page.goto('https://qingniantuzhai.com' + currMsg.titleLink, {
@@ -86,6 +86,6 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
         browser.close()
         console.log('ending')
         console.log(new Date().getDate())
-    }, 9200000)
-    // }, 0)
+        // }, 9200000)
+    }, 0)
 })
