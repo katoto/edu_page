@@ -1,17 +1,11 @@
 // cheerio 爬虫
-var eventproxy = require('eventproxy')
 var cheerio = require('cheerio')
 var superagent = require('superagent')
 var url = require('url')
-var async = require('async')
 var fs = require('fs')
 var path = require('path')
-var express = require('express')
 
-var app = express()
 var cnodeUrl = 'https://cnodejs.org/'
-
-var count = 0;
 
 superagent.get(cnodeUrl).end(function(err, sres) {
     if(err) return false ;
@@ -40,18 +34,3 @@ superagent.get(cnodeUrl).end(function(err, sres) {
         console.log(content)
     })
 })
-
-// app.get('/', function(req, res, next){
-//     superagent.get(cnodeUrl).end(function(err, sres) {
-//         if(err) next(err);
-//         var $ = cheerio.load(sres.text)
-//         console.log('======')
-//         console.log($)
-//         var topicUrls = [];
-        
-//     })
-// })
-
-// app.listen(3000, function() {
-//     console.log('listen to port 3000');
-// });
