@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer')
 let browser = null
 let page = null
 
-let getList = async() => {
+let getList = async () => {
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
@@ -37,17 +37,17 @@ let getList = async() => {
 
 var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://47.96.234.59:2710/'
-MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
     var dbo = db.db('katoto')
-    setTimeout(async() => {
+    setTimeout(async () => {
         try {
             let backData = null;
             let currMsg = null;
             backData = await getList()
             for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
                 currMsg = backData.kutuImg[i]
-                    // 取详情数据
+                // 取详情数据
                 if (currMsg && currMsg.titleLink && i < 12) {
                     if (browser) {
                         page = await browser.newPage()
@@ -76,6 +76,6 @@ MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
         browser.close()
         console.log('ending')
         console.log(new Date().getDate())
-    // }, 9900000)
+        // }, 9900000)
     }, 0)
 })
