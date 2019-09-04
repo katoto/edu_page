@@ -15,3 +15,8 @@
 cheerioPage 是另一种方式数据爬取。
 
 [cheerioPage常用使用方法](https://www.jianshu.com/p/1432e0f29abd)
+
+#### dapenti 网
+抓取打喷嚏数据
+[喷嚏](http://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70&page=1)
+[喷嚏详情](http://www.dapenti.com/blog/more.asp?name=xilei&id=142898)
