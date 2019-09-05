@@ -14,7 +14,7 @@ let getList = async () => {
     browser = await (puppeteer.launch({
         ignoreHTTPSErrors: true,
         devtools: false,
-        headless: false,
+        headless: true,
         args: ['--no-sandbox']
     }))
     page = await browser.newPage()
