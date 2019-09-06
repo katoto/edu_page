@@ -28,8 +28,10 @@ let getList = async () => {
               currObj._id = dom.getAttribute('href').replace('more.asp?name=xilei&id=', '')
               currObj.titleLink = dom.getAttribute('href')
               currObj.titleLink = 'http://www.dapenti.com/blog/' + currObj.titleLink
-              if(dom.innerHTML){
-                currObj.title = dom.innerHTML.replace('喷嚏图卦', 'katoto图卦')
+              let currVal = dom.innerHTML
+              if(currVal){
+                currObj.title = currVal.replace('喷嚏图卦', 'katoto图卦')
+                currObj.sortTime = currObj.title.slice(9,17)
               }
           }
           kutu.push(currObj)
@@ -55,7 +57,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
             for (let i = 0, len = backData.kutuImg.length; i < len; i++) {
                 currMsg = backData.kutuImg[i]
                 dbo.collection('dapenti').save(currMsg)
-                // 取详情数据
+                // 取详情数据 
                 if (currMsg && currMsg.titleLink && i < 5) {
                     if (browser) {
                         const page = await browser.newPage()
