@@ -4,22 +4,6 @@ var url = 'mongodb://47.96.234.59:27017/'
     // 2、查询数据  年级爬虫
 let selectData = function(db, callback) {
     //连接到年级表
-    // var collection = db.collection('edu_class1_shuxue')
-    // var collection = db.collection('edu_class1_yingyu')
-    // var collection = db.collection('edu_class1_yuwen')
-    // var collection = db.collection('edu_class2_shuxue')
-    // var collection = db.collection('edu_class2_yingyu')
-    // var collection = db.collection('edu_class2_yuwen')
-    // var collection = db.collection('edu_class3_shuxue')
-    // var collection = db.collection('edu_class3_yingyu')
-    // var collection = db.collection('edu_class3_yuwen')
-    // var collection = db.collection('edu_class4_shuxue')
-    // var collection = db.collection('edu_class4_yingyu')
-    // var collection = db.collection('edu_class4_yuwen')
-
-    // var collection = db.collection('edu_class5_shuxue')
-    // var collection = db.collection('edu_class5_yingyu')
-    // var collection = db.collection('edu_class5_yuwen')
 
     // var collection = db.collection('edu_class6_shuxue')
     // var collection = db.collection('edu_class6_yingyu')

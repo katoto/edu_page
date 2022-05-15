@@ -1,16 +1,12 @@
-// 年摘详情
-// 用于清理部分mongodb 不用的数据
-var MongoClient = require('mongodb').MongoClient
-var url = 'mongodb://47.96.234.59:27017/'
-// let selName = 'edu_class1_shuxue'
-// let selName = 'edu_class1_yuwen'
-// let selName = 'edu_class1_yingyu'
-// let selName = 'edu_class2_shuxue'
-// let selName = 'edu_class2_yuwen'
-// let selName = 'edu_class2_yingyu'
-// let selName = 'edu_class3_shuxue'
-// let selName = 'edu_class3_yuwen'
-let selName = 'edu_class3_yingyu'
+/*
+* db db名称
+* selName 为表名
+* 用于清理部分mongodb 不用的数据
+*/
+
+const MongoClient = require('mongodb').MongoClient
+const url = 'mongodb://81.69.15.167:27017/'
+let selName = 'dapenti'
 // 2、查询数据
 let selectData = function (db, callback) {
     //连接到表  
@@ -25,26 +21,19 @@ let selectData = function (db, callback) {
         callback(result);
     });
 }
+
 MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) throw err
-    var dbo = db.db('katoto')
+    var dbo = db.db('admin')
     selectData(dbo, function (result) {
-        getList(result, dbo)
+        deleteData(result, dbo)
     });
 })
-let getList = async (result, dbo) => {
-    console.log(result.length)
+
+let deleteData = async (result, dbo) => {
     for (let i = 0, len = result.length; i < len; i++) {
-        delete result[i].artmsg
-        await updatemsg(result[i], dbo)
+        dbo.collection(selName).deleteOne({
+            '_id': result[i]._id
+        })
     }
-}
-let updatemsg = function (res, dbo) {
-    dbo.collection(selName).save(res)
-    // 查询并设置
-    // return new Promise((resolve, reject) => {
-    //     dbo.collection('edu_class1_shuxue').update({ "_id": res._id }, { $set: { artmsg: '' } }, function () {
-    //         resolve(1)
-    //     })
-    // })
 }
