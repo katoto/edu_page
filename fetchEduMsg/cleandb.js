@@ -6,7 +6,7 @@
 
 const MongoClient = require('mongodb').MongoClient
 const url = 'mongodb://81.69.15.167:27017/'
-let selName = 'dapenti'
+let selName = 'article_dapenti'
 // 2、查询数据
 let selectData = function (db, callback) {
     //连接到表  
